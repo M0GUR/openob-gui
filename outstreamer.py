@@ -1,8 +1,8 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # Imports
 import sys
 import logging
-import ConfigParser
+import configparser
 
 argv = sys.argv
 sys.argv = []
@@ -12,18 +12,19 @@ from openob.link_config import LinkConfig
 from openob.audio_interface import AudioInterface
 sys.argv = argv
 
-Config = ConfigParser.ConfigParser()
+Config = configparser.ConfigParser()
 Config.read("/home/pi/openob-gui/outstreamer.ini")
 
 if len(sys.argv) > 1 and sys.argv[1] == 'autostart':
 	if Config.get("outstreamer", "Boot") != '1':
-		print "Autostart off"
+		print ("Autostart off")
 		sys.exit()
 
 logger_factory = LoggerFactory(level=logging.INFO)
 link_config = LinkConfig("transmission", Config.get("outstreamer", "Encoder_IP"))
 audio_interface = AudioInterface("recepteur")
 link_config.set("port", Config.get("outstreamer", "Listen_Port"))
+link_config.set("name", "test-link")
 audio_interface.set("mode", "rx")
 audio_interface.set("type", "alsa")
 audio_interface.set("alsa_device", "hw:" + Config.get("outstreamer", "Soundcard_ID"))
