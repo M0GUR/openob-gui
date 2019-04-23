@@ -4,13 +4,21 @@
 OpenOB-gui is a simple graphical user interface for OpenOB (Open Outside Broadcast), a simple Python/GStreamer based application which implements a highly configurable RTP-based audio link system.
 This application is designed to run on Raspberry with Raspbian 8 (Debian Jessie) and is coded in PHP and requires some system permissions. (To modify the interfaces or restart)
 
+This fork is being used by me (James Harris) to develop a few changes to the project to bring it up to date with Raspbian Stretch and OpenOB 4.0.3 
+
 # Installation
 
-Install Raspbian Jessie Lite on a SD card: http://downloads.raspberrypi.org/raspbian/images/raspbian-2017-07-05/
+Install Raspbian Stretch Lite on a SD card: https://downloads.raspberrypi.org/raspbian_lite_latest
 
-Install OpenOB on your Debian system: http://jamesharrison.github.io/openob/tutorial.html#openob-system-basics
+Install OpenOB 4.0.3 or later on your Debian based system:
 
-**In case of apt problems, remove python-argparse and gstreamer0.10-ffmpeg, these packets are apparently not required.**
+	sudo apt-get install python-gst-1.0 gstreamer1.0-alsa libgstreamer1.0-0 gstreamer1.0-libav gstreamer1.0-doc gstreamer1.0-tools
+	
+	sudo apt-get install gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly
+	
+	sudo apt-get install python3-pip
+	
+	pip3 install openob
 
 # Use the good user
 
@@ -30,7 +38,7 @@ Nginx is available as a package for Debian Jessie which we can install as follow
 We can make PHP5 work in nginx through PHP-FPM (PHP-FPM (FastCGI Process Manager) is an alternative PHP FastCGI implementation
 with some additional features useful for sites of any size, especially busier sites) which we install as follows:
 	
-	sudo apt-get -y install php5-fpm
+	sudo apt-get -y install php-fpm
 
 # Configuring nginx
 
@@ -109,7 +117,7 @@ The important part for PHP is the location ~ \.php$ {} stanza. Uncomment it like
 
 # Configure PHP
 
-	sudo nano /etc/php5/fpm/php.ini
+	sudo nano /etc/php/7.0/fpm/php.ini
 
 ... and set cgi.fix_pathinfo=0:
 
@@ -137,15 +145,15 @@ sudo nano /etc/nginx/sites-available/default
 	root /home/pi/openob-gui/html;
 	error_page 500 502 503 504 /custom_50x.html;
 
-sudo nano /etc/php5/fpm/pool.d/www.conf
+sudo nano /etc/php/7.0/fpm/pool.d/www.conf
 
 	user = pi
 	group = pi
 
 Restart services:
 
-	sudo /etc/init.d/nginx restart
-	sudo /etc/init.d/php5-fpm restart
+	sudo systemctl restart nginx
+	sudo systemctl restart php7.0-fpm
 
 # Configure sudo permissions
 
@@ -186,7 +194,7 @@ Developpers, do not hesitate to suggest your pull requests! :)
 
 # Professional support
 
-I am available in consulting for the radios that would be interested to deploy the solution.
+The original author is available in consulting for the radios that would be interested to deploy the solution.
 (To do this through my personal website : http://www.mickael.be)
 
 # Security
@@ -196,7 +204,7 @@ Neither the openOB-GUI interface, although you can add Nginx authentication, nor
 
 To connect 2 remote OpenOB over the Internet, it is strongly recommended that you set up a VPN or MPLS tunnel.
 
-# Buy me a coffee ;)
+# Buy the author a coffee ;)
 
 [![ko-fi](https://www.ko-fi.com/img/donate_sm.png)](https://ko-fi.com/Y8Y5MXCW)
 
