@@ -8,7 +8,7 @@ include ("header.php");
 
 if (isset($_GET['action'])) {
 	if ($_GET['action'] == 'start') {
-		shell_exec("python " . PATH_APPLICATION . "/instreamer.py > /dev/null 2> " . PATH_LOG . "/instreamer.log &");
+		shell_exec("python3 " . PATH_APPLICATION . "/instreamer.py > /dev/null 2> " . PATH_LOG . "/instreamer.log &");
 		sleep(2); //The time the log is created
 	}
 	elseif ($_GET['action'] == 'stop') {
@@ -16,7 +16,7 @@ if (isset($_GET['action'])) {
 	}
 }
 
-$process = shell_exec("ps -aux | grep 'python " . PATH_APPLICATION . "/instreamer.py'");
+$process = shell_exec("ps -aux | grep 'python3 " . PATH_APPLICATION . "/instreamer.py'");
 $lines_arr = preg_split('/\n|\r/', $process);
 $lines = count($lines_arr);
 
