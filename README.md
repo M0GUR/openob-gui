@@ -18,7 +18,7 @@ Install OpenOB 4.0.3 or later on your Debian based system:
 	
 	sudo apt-get install python3-pip
 	
-	pip3 install openob
+	sudo pip3 install openob
 
 # Use the good user
 
